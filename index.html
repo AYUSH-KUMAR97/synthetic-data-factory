@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SynthetixAI - No-Code Data Augmentation Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.2.0/lib/bundle.min.js"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl font-black tracking-tight bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                    SynthetixAI
+                </span>
+                <span class="text-xs bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded-full font-mono">v1.0</span>
+            </div>
+            <nav class="text-sm text-slate-400 space-x-4">
+                <a href="#how-it-works" class="hover:text-slate-200 transition font-medium">How it Works</a>
+                <a href="#legal" class="hover:text-slate-200 transition font-medium">Privacy</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-12">
+        
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold text-white tracking-tight mb-3">
+                Augment Your Datasets Instantly
+            </h1>
+            <p class="text-slate-400 max-w-xl mx-auto text-base">
+                Upload a baseline CSV. Analyze distribution fields natively. Synthesize balanced data structures without server overloads.
+            </p>
+        </div>
+
+        <div id="drop-zone" class="border-2 border-dashed border-slate-700 hover:border-cyan-500 bg-slate-800/40 rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 group mb-8">
+            <input type="file" id="csv-file-input" accept=".csv" class="hidden" />
+            <div class="space-y-4">
+                <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto group-hover:scale-105 transition-transform border border-slate-700 group-hover:border-cyan-500">
+                    <svg class="w-8 h-8 text-slate-400 group-hover:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                </div>
+                <div>
+                    <p class="text-base font-semibold text-slate-200">Click to upload or drag & drop</p>
+                    <p class="text-xs text-slate-500 mt-1">Raw tabular CSV formats up to 50MB</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="control-panel" class="hidden space-y-6">
+            
+            <div class="bg-slate-800/60 rounded-2xl p-6 border border-slate-700/60">
+                <h3 class="text-sm font-semibold tracking-wider uppercase text-slate-400 mb-4">Input Profile Detected</h3>
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                        <div id="meta-rows" class="text-2xl font-bold text-white font-mono">-</div>
+                        <div class="text-xs text-slate-500 uppercase font-semibold tracking-wider mt-1">Total Records</div>
+                    </div>
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                        <div id="meta-cols" class="text-2xl font-bold text-white font-mono">-</div>
+                        <div class="text-xs text-slate-500 uppercase font-semibold tracking-wider mt-1">Features</div>
+                    </div>
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                        <div id="file-size" class="text-2xl font-bold text-cyan-400 font-mono">-</div>
+                        <div class="text-xs text-slate-500 uppercase font-semibold tracking-wider mt-1">Memory Size</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/60 rounded-2xl p-6 border border-slate-700/60 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Generation Scale (Rows to Generate)</label>
+                    <input type="number" id="generation-count" min="10" max="50000" value="1000" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 font-mono" />
+                    <span class="text-xs text-slate-500 mt-1 block">Maximum 50,000 items per browser engine routine</span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Augmentation Strategy</label>
+                    <select id="generation-strategy" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500">
+                        <option value="gaussian">Gaussian Noise Injection (Continuous Profiles)</option>
+                        <option value="bootstrap">Bootstrap Resampling (Categorical Preserved)</option>
+                    </select>
+                    <span class="text-xs text-slate-500 mt-1 block">Gaussian works best for numeric values, Bootstrap for words/classes</span>
+                </div>
+            </div>
+
+            <button id="btn-generate" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-900 font-bold py-4 px-6 rounded-xl transition duration-200 transform active:scale-[0.99] shadow-lg shadow-cyan-500/10">
+                Synthesize & Process Synthetic Output
+            </button>
+        </div>
+
+        <div id="processing-loader" class="hidden py-12 text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
+            <p class="text-slate-400 text-sm">Processing vectors and calculating variances locally...</p>
+        </div>
+
+        <div id="download-panel" class="hidden bg-gradient-to-br from-emerald-500/10 to-teal-600/10 border border-emerald-500/20 rounded-2xl p-6 text-center mt-6">
+            <div class="inline-flex items-center justify-center p-3 bg-emerald-500/20 rounded-full mb-3 text-emerald-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-1">Synthesization Pipeline Finished Successfully</h3>
+            <p class="text-slate-400 text-sm mb-4">Your new augmented data array is fully constructed and optimized.</p>
+            <button id="btn-download" class="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-3 px-8 rounded-xl transition shadow-lg shadow-emerald-500/20">
+                Download Augmented CSV File
+            </button>
+        </div>
+
+        <section id="how-it-works" class="mt-20 pt-12 border-t border-slate-800">
+            <h2 class="text-2xl font-bold text-white mb-6 tracking-tight text-center">Engine Mathematical Foundations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6">
+                    <div class="text-cyan-400 font-mono font-bold text-sm mb-2">METHOD 01 //</div>
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Gaussian Mathematical Noise</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        For quantitative columns (integers/floats), the parser isolates the mean and standard variance arrays. New instances are synthesized utilizing a Box-Muller transformation pipeline to introduce controlled mathematical noise without breaking data integrity profiles.
+                    </p>
+                </div>
+                <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6">
+                    <div class="text-blue-400 font-mono font-bold text-sm mb-2">METHOD 02 //</div>
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Bootstrap Probability Sampling</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        For discrete/categorical data features (strings, text classes), our client configuration applies random sampling loops with replacement. This system ensures category weights remain statistically uniform across expanded synthetic tables.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="legal" class="border-t border-slate-800 bg-slate-950 py-8 px-6 text-center text-xs text-slate-500 space-y-3 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 SynthetixAI. Calculated client-side. Zero server data footprints.</p>
+            <div class="space-x-4">
+                <a href="#" class="hover:underline">Privacy Policy</a>
+                <a href="#" class="hover:underline">Terms of Service</a>
+                <a href="#" class="hover:underline">Contact Information</a>
+            </div>
+        </div>
+        <p class="max-w-xl mx-auto leading-relaxed text-slate-600">
+            Disclaimer: We utilize cookies and modern structural ad placements to scale this free tool asset. No uploaded analytical files touch cloud networks; vectors exist purely inside local memory cache layers.
+        </p>
+    </footer>
+
+    <script>
+        // Global container holding the active Danfo DataFrame object reference
+        let activeDataFrame = null;
+        let syntheticDataFrame = null;
+
+        // DOM element handles
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('csv-file-input');
+        const controlPanel = document.getElementById('control-panel');
+        const loader = document.getElementById('processing-loader');
+        const downloadPanel = document.getElementById('download-panel');
+
+        // Setup drop-zone click events
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        // Handle physical file additions
+        fileInput.addEventListener('change', (e) => handleFileObject(e.target.files[0]));
+
+        // Dragover visual loops
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-cyan-500'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-cyan-500'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('border-cyan-500');
+            if (e.dataTransfer.files.length) handleFileObject(e.dataTransfer.files[0]);
+        });
+
+        // Parse file via Danfo.js readCSV framework
+        function handleFileObject(file) {
+            if (!file || !file.name.endsWith('.csv')) {
+                alert('Invalid matrix format. Please drop a verified CSV structural file.');
+                return;
+            }
+
+            // Update UI sizing values
+            document.getElementById('file-size').innerText = (file.size / 1024).toFixed(1) + ' KB';
+            loader.classList.remove('hidden');
+            controlPanel.classList.add('hidden');
+            downloadPanel.classList.add('hidden');
+
+            // Pass file directly to DanfoJS runtime
+            dfd.readCSV(file)
+                .then(df => {
+                    activeDataFrame = df;
+                    document.getElementById('meta-rows').innerText = df.shape[0];
+                    document.getElementById('meta-cols').innerText = df.shape[1];
+                    
+                    loader.classList.add('hidden');
+                    controlPanel.classList.remove('hidden');
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Parser error reading matrix values.');
+                    loader.classList.add('hidden');
+                });
+        }
+
+        // Processing / Generation Logic Execution Setup
+        document.getElementById('btn-generate').addEventListener('click', () => {
+            if (!activeDataFrame) return;
+
+            const targetRowCount = parseInt(document.getElementById('generation-count').value);
+            const strategy = document.getElementById('generation-strategy').value;
+
+            controlPanel.classList.add('hidden');
+            loader.classList.remove('hidden');
+
+            // Use a short setTimeout to let the browser draw the loading spinner before lock
+            setTimeout(() => {
+                try {
+                    const columns = activeDataFrame.columns;
+                    const generatedData = {};
+
+                    // Loop through each column independently to calculate and augment
+                    columns.forEach(colName => {
+                        const currentSeries = activeDataFrame[colName];
+                        const dataType = currentSeries.dtypes[0];
+                        const tempArray = [];
+
+                        if (strategy === 'gaussian' && (dataType === 'float32' || dataType === 'int32')) {
+                            // Compute metric distributions using DanfoJS statistical engines
+                            const mean = currentSeries.mean();
+                            const stdDev = currentSeries.std();
+
+                            // Use Box-Muller transform to generate noise vectors centered around existing mean
+                            for (let i = 0; i < targetRowCount; i++) {
+                                let u1 = Math.random();
+                                let u2 = Math.random();
+                                let normalNoise = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+                                let syntheticVal = mean + normalNoise * stdDev;
+                                
+                                // Clean integer limits if baseline column was typed as int
+                                tempArray.push(dataType === 'int32' ? Math.round(syntheticVal) : parseFloat(syntheticVal.toFixed(4)));
+                            }
+                        } else {
+                            // Bootstrap Strategy / Fallback for string classes - Randomized sampling with replacement
+                            const baselineValues = currentSeries.values;
+                            const length = baselineValues.length;
+                            for (let i = 0; i < targetRowCount; i++) {
+                                const randomIndex = Math.floor(Math.random() * length);
+                                tempArray.push(baselineValues[randomIndex]);
+                            }
+                        }
+                        generatedData[colName] = tempArray;
+                    });
+
+                    // Wrap new arrays into a brand-new clean Output DataFrame
+                    syntheticDataFrame = new dfd.DataFrame(generatedData);
+                    
+                    loader.classList.add('hidden');
+                    downloadPanel.classList.remove('hidden');
+                } catch (error) {
+                    console.error(error);
+                    alert('Mathematics calculation error running distributions.');
+                    loader.classList.add('hidden');
+                    controlPanel.classList.remove('hidden');
+                }
+            }, 50);
+        });
+
+        // Trigger native file downloads with an infallible vanilla JS fallback structure
+        document.getElementById('btn-download').addEventListener('click', () => {
+            if (!syntheticDataFrame) return;
+            
+            try {
+                // Try executing native Danfo wrapper link dump
+                dfd.toCSV(syntheticDataFrame, { 
+                    fileName: "augmented_synthetic_dataset.csv", 
+                    download: true 
+                });
+            } catch (fallbackError) {
+                console.log("Danfo engine direct download bypassed. Triggering local memory blob export...");
+                
+                // Bulletproof browser buffer compilation fallback
+                const csvString = syntheticDataFrame.to_csv();
+                const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                
+                link.setAttribute("href", url);
+                link.setAttribute("download", "augmented_synthetic_dataset.csv");
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
+    </script>
+</body>
+</html>
