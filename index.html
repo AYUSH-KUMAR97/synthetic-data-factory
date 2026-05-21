@@ -160,7 +160,7 @@
                     const data = [];
                     for(let i=1; i<rows.length; i++) {
                         const cols = rows[i].split(',');
-                        if(cols.length === header.length) { data.append(cols); }
+                        if(cols.length === header.length) { data.push(cols); }
                     }
                     
                     uploadedDataFrame = new dfd.DataFrame(data, { columns: header });
@@ -195,12 +195,12 @@
                         uniqueValues.forEach(val => {
                             const countIndex = valueCounts.index.indexOf(val);
                             const count = countIndex !== -1 ? valueCounts.values[countIndex] : 1;
-                            probabilities.append(count / totalElements);
+                            probabilities.push(count / totalElements);
                         });
 
                         const colGeneratedArray = [];
                         for(let i=0; i<targetRowCount; i++) {
-                            colGeneratedArray.append(weightedRandomSample(uniqueValues, probabilities));
+                            colGeneratedArray.push(weightedRandomSample(uniqueValues, probabilities));
                         }
                         columnsData[colName] = colGeneratedArray;
                     });
