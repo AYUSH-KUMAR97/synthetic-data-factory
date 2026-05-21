@@ -187,14 +187,30 @@
 
                     columns.forEach(colName => {
                         const colSeries = uploadedDataFrame[colName];
-                        const uniqueValues = colSeries.unique().values;
-                        const valueCounts = colSeries.value_counts();
                         
-                        const totalElements = colSeries.shape[0];
+                        // सेफ्टी लेयर: मिसing या null डेटा को "NA" से बदलें ताकि Danfo.js क्रैश न हो
+                        const filledSeries = colSeries.fillNa("NA");
+                        
+                        const uniqueValues = filledSeries.unique().values;
+                        const valueCounts = filledSeries.value_counts();
+                        
+                        const totalElements = filledSeries.shape[0];
                         const probabilities = [];
+                        
                         uniqueValues.forEach(val => {
-                            const countIndex = valueCounts.index.indexOf(val);
-                            const count = countIndex !== -1 ? valueCounts.values[countIndex] : 1;
+                            // अगर कोई वैल्यू गलती से null/undefined रह जाए
+                            if (val === undefined || val === null) {
+                                val = "NA";
+                            }
+                            
+                            // सेफ इंडेक्स चेकिंग सुरक्षा कवच
+                            let count = 1;
+                            if (valueCounts && valueCounts.index) {
+                                const countIndex = valueCounts.index.indexOf(val);
+                                if (countIndex !== -1 && valueCounts.values) {
+                                    count = valueCounts.values[countIndex];
+                                }
+                            }
                             probabilities.push(count / totalElements);
                         });
 
@@ -209,6 +225,7 @@
                     loaderPanel.classList.add('hidden');
                     downloadPanel.classList.remove('hidden');
                 } catch (e) {
+                    console.error(e); // कंसोल में असली एरर देखने के लिए
                     loaderPanel.classList.add('hidden');
                     configPanel.classList.remove('hidden');
                     alert('An optimization mathematical compiling runtime execution error occurred.');
