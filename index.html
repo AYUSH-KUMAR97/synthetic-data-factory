@@ -160,7 +160,13 @@
                     const data = [];
                     for(let i=1; i<rows.length; i++) {
                         const cols = rows[i].split(',');
-                        if(cols.length === header.length) { data.push(cols); }
+                        if(cols.length === header.length) {
+                            // सुपर सेफ्टी लेयर: अगर रो (Row) में कोई भी वैल्यू खाली या अनफाइंड है, तो उसे यहीं "NA" कर दो
+                            const cleanedCols = cols.map(val => {
+                                return (val === undefined || val === null || val === "" || val.trim() === "") ? "NA" : val;
+                            });
+                            data.push(cleanedCols);
+                        }
                     }
                     
                     uploadedDataFrame = new dfd.DataFrame(data, { columns: header });
@@ -188,29 +194,19 @@
                     columns.forEach(colName => {
                         const colSeries = uploadedDataFrame[colName];
                         
-                        // सेफ्टी लेयर: मिसing या null डेटा को "NA" से बदलें ताकि Danfo.js क्रैश न हो
-                        const filledSeries = colSeries.fillNa("NA");
+                        // जावास्क्रिप्ट एरे में कन्वर्ट करके पूरी तरह से सेफ प्रोसेसिंग करेंगे
+                        const rawValues = colSeries.values.map(v => (v === undefined || v === null || v === "") ? "NA" : v);
                         
-                        const uniqueValues = filledSeries.unique().values;
-                        const valueCounts = filledSeries.value_counts();
+                        // यूनिक वैल्यूज और उनके काउंट्स को कोर JS से निकालेंगे ताकि Danfo.js क्रैश न हो
+                        const uniqueValues = [...new Set(rawValues)];
+                        const valueCounts = {};
+                        rawValues.forEach(v => { valueCounts[v] = (valueCounts[v] || 0) + 1; });
                         
-                        const totalElements = filledSeries.shape[0];
+                        const totalElements = rawValues.length;
                         const probabilities = [];
                         
                         uniqueValues.forEach(val => {
-                            // अगर कोई वैल्यू गलती से null/undefined रह जाए
-                            if (val === undefined || val === null) {
-                                val = "NA";
-                            }
-                            
-                            // सेफ इंडेक्स चेकिंग सुरक्षा कवच
-                            let count = 1;
-                            if (valueCounts && valueCounts.index) {
-                                const countIndex = valueCounts.index.indexOf(val);
-                                if (countIndex !== -1 && valueCounts.values) {
-                                    count = valueCounts.values[countIndex];
-                                }
-                            }
+                            const count = valueCounts[val] || 1;
                             probabilities.push(count / totalElements);
                         });
 
@@ -225,7 +221,7 @@
                     loaderPanel.classList.add('hidden');
                     downloadPanel.classList.remove('hidden');
                 } catch (e) {
-                    console.error(e); // कंसोल में असली एरर देखने के लिए
+                    console.error(e);
                     loaderPanel.classList.add('hidden');
                     configPanel.classList.remove('hidden');
                     alert('An optimization mathematical compiling runtime execution error occurred.');
