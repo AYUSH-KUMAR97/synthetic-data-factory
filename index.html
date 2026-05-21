@@ -3,91 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SynthetixData AI - Advanced Data Science Augmentation Platform</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/dist/index.min.js"></script>
+    <title>SynthetixAI - No-Code Data Augmentation Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.2.0/lib/bundle.min.js"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen selection:bg-emerald-500 selection:text-slate-950">
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
 
-    <nav class="border-b border-slate-900 bg-slate-950/80 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="bg-gradient-to-tr from-emerald-500 to-teal-400 p-2 rounded-xl text-slate-950 font-black tracking-wider text-sm shadow-lg shadow-emerald-500/20">
-                    S𝕏D
-                </div>
-                <span class="font-bold text-xl tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">SynthetixData<span class="text-emerald-400 font-medium text-sm ml-1 px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">v1.0</span></span>
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl font-black tracking-tight bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                    SynthetixAI
+                </span>
+                <span class="text-xs bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded-full font-mono">v1.0</span>
             </div>
-            <div class="flex items-center gap-6 text-sm font-medium text-slate-400">
-                <a href="#how-it-works" class="hover:text-white transition">Core Architecture</a>
-                <a href="https://github.com" target="_blank" class="text-slate-500 hover:text-white transition flex items-center gap-1">
-                    GitHub <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                </a>
-            </div>
+            <nav class="text-sm text-slate-400 space-x-4">
+                <a href="#how-it-works" class="hover:text-slate-200 transition font-medium">How it Works</a>
+                <a href="#legal" class="hover:text-slate-200 transition font-medium">Privacy</a>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <main class="max-w-4xl mx-auto px-4 py-12">
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-12">
         
         <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-4 bg-gradient-to-b from-white via-slate-200 to-slate-500 bg-clip-text text-transparent">
-                Privacy-Preserving Client-Side <br><span class="text-emerald-400">Data Augmentation Engine</span>
+            <h1 class="text-4xl font-extrabold text-white tracking-tight mb-3">
+                Augment Your Datasets Instantly
             </h1>
-            <p class="text-slate-400 max-w-xl mx-auto text-base md:text-lg">
-                Upload your small data sets or tabular vectors. Expand them using our high-cardinality statistical profiling layers directly inside your local browser runtime.
+            <p class="text-slate-400 max-w-xl mx-auto text-base">
+                Upload a baseline CSV. Analyze distribution fields natively. Synthesize balanced data structures without server overloads.
             </p>
         </div>
 
-        <div class="bg-slate-900/40 border border-slate-900 rounded-3xl p-6 md:p-8 backdrop-blur shadow-2xl">
+        <div id="drop-zone" class="border-2 border-dashed border-slate-700 hover:border-cyan-500 bg-slate-800/40 rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 group mb-8">
+            <input type="file" id="csv-file-input" accept=".csv" class="hidden" />
+            <div class="space-y-4">
+                <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto group-hover:scale-105 transition-transform border border-slate-700 group-hover:border-cyan-500">
+                    <svg class="w-8 h-8 text-slate-400 group-hover:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                </div>
+                <div>
+                    <p class="text-base font-semibold text-slate-200">Click to upload or drag & drop</p>
+                    <p class="text-xs text-slate-500 mt-1">Raw tabular CSV formats up to 50MB</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="control-panel" class="hidden space-y-6">
             
-            <div id="drop-zone" class="border-2 border-dashed border-slate-800 hover:border-emerald-500/50 bg-slate-950/50 rounded-2xl p-8 text-center cursor-pointer transition group">
-                <input type="file" id="file-input" accept=".csv" class="hidden">
-                <div class="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center mx-auto mb-4 border border-slate-800 group-hover:scale-110 transition group-hover:border-emerald-500/20 group-hover:text-emerald-400 text-slate-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                </div>
-                <h3 class="text-white font-semibold mb-1">Upload Source Data Array</h3>
-                <p class="text-slate-500 text-sm mb-0.5">Drag & drop your CSV file here or click to browse files</p>
-                <p class="text-slate-600 text-xs">Supports automated high-cardinality probabilistic arrays</p>
-            </div>
-
-            <div id="config-panel" class="hidden mt-6 pt-6 border-t border-slate-900">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-300 uppercase tracking-wider">Augmentation Factor Configuration</h4>
-                        <p id="file-details" class="text-xs text-emerald-400 mt-0.5"></p>
+            <div class="bg-slate-800/60 rounded-2xl p-6 border border-slate-700/60">
+                <h3 class="text-sm font-semibold tracking-wider uppercase text-slate-400 mb-4">Input Profile Detected</h3>
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                        <div id="meta-rows" class="text-2xl font-bold text-white font-mono">-</div>
+                        <div class="text-xs text-slate-500 uppercase font-semibold tracking-wider mt-1">Total Records</div>
+                    </div>
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                        <div id="meta-cols" class="text-2xl font-bold text-white font-mono">-</div>
+                        <div class="text-xs text-slate-500 uppercase font-semibold tracking-wider mt-1">Features</div>
+                    </div>
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                        <div id="file-size" class="text-2xl font-bold text-cyan-400 font-mono">-</div>
+                        <div class="text-xs text-slate-500 uppercase font-semibold tracking-wider mt-1">Memory Size</div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-                    <div>
-                        <label class="block text-xs text-slate-400 font-medium mb-1.5 uppercase">Synthetic Sample Size Multiplication</label>
-                        <select id="augmentation-factor" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:border-emerald-500 transition text-white">
-                            <option value="1.5">1.5x (Expand Sample Matrix by 50%)</option>
-                            <option value="2.0" selected>2.0x (Double Row Sample Count)</option>
-                            <option value="3.0">3.0x (Triple Training Sample Dataset)</option>
-                            <option value="5.0">5.0x (High-Intensity Factor Expansion)</option>
-                        </select>
-                    </div>
-                    <button id="btn-process" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 px-6 rounded-xl transition duration-150 shadow-lg shadow-emerald-500/10 mt-4 sm:mt-5 cursor-pointer">
-                        Execute Probabilistic Pipeline
-                    </button>
+            </div>
+
+            <div class="bg-slate-800/60 rounded-2xl p-6 border border-slate-700/60 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Generation Scale (Rows to Generate)</label>
+                    <input type="number" id="generation-count" min="10" max="50000" value="1000" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 font-mono" />
+                    <span class="text-xs text-slate-500 mt-1 block">Maximum 50,000 items per browser engine routine</span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Augmentation Strategy</label>
+                    <select id="generation-strategy" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500">
+                        <option value="gaussian">Gaussian Noise Injection (Continuous Profiles)</option>
+                        <option value="bootstrap">Bootstrap Resampling (Categorical Preserved)</option>
+                    </select>
+                    <span class="text-xs text-slate-500 mt-1 block">Gaussian works best for numeric values, Bootstrap for words/classes</span>
                 </div>
             </div>
 
-            <div id="loader-panel" class="hidden text-center py-8">
-                <div class="inline-block animate-spin w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full mb-3"></div>
-                <p class="text-sm text-slate-400 font-medium">Computing independent probability matrices and column-wise weights...</p>
-            </div>
+            <button id="btn-generate" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-900 font-bold py-4 px-6 rounded-xl transition duration-200 transform active:scale-[0.99] shadow-lg shadow-cyan-500/10">
+                Synthesize & Process Synthetic Output
+            </button>
+        </div>
 
-            <div id="download-panel" class="hidden bg-gradient-to-br from-emerald-500/10 to-teal-600/10 border border-emerald-500/20 rounded-2xl p-6 text-center mt-6">
-                <div class="inline-flex items-center justify-center p-3 bg-emerald-500/20 rounded-full mb-3 text-emerald-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                </div>
-                <h3 class="text-lg font-bold text-white mb-1">Synthesization Pipeline Finished Successfully</h3>
-                <p class="text-slate-400 text-sm mb-4">Your new augmented data array is fully constructed and optimized.</p>
-                <button id="btn-download" class="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-3 px-8 rounded-xl transition shadow-lg shadow-emerald-500/20">
-                    Download Augmented CSV File
-                </button>
-            </div>
+        <div id="processing-loader" class="hidden py-12 text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
+            <p class="text-slate-400 text-sm">Processing vectors and calculating variances locally...</p>
+        </div>
 
+        <div id="download-panel" class="hidden bg-gradient-to-br from-emerald-500/10 to-teal-600/10 border border-emerald-500/20 rounded-2xl p-6 text-center mt-6">
+            <div class="inline-flex items-center justify-center p-3 bg-emerald-500/20 rounded-full mb-3 text-emerald-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-1">Synthesization Pipeline Finished Successfully</h3>
+            <p class="text-slate-400 text-sm mb-4">Your new augmented data array is fully constructed and optimized.</p>
+            <button id="btn-download" class="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-3 px-8 rounded-xl transition shadow-lg shadow-emerald-500/20">
+                Download Augmented CSV File
+            </button>
         </div>
 
         <div class="mt-8 p-4 bg-slate-900/20 border border-slate-900/60 rounded-2xl text-center min-h-[100px] flex items-center justify-center">
@@ -97,159 +115,188 @@
 
             
         </div>
-        <section id="how-it-works" class="mt-20 pt-12 border-t border-slate-900">
-            <h2 class="text-xl font-bold text-white mb-6 tracking-tight flex items-center gap-2">
-                <span class="w-1.5 h-5 bg-emerald-500 rounded-full"></span> Platform Mathematical Architecture
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-5 rounded-2xl bg-slate-900/20 border border-slate-900">
-                    <div class="text-xs font-bold text-emerald-400 mb-2 uppercase tracking-wide">Phase 1</div>
-                    <h4 class="text-white font-semibold mb-1.5 text-sm">Vector Matrix Isolation</h4>
-                    <p class="text-slate-400 text-xs leading-relaxed">The application framework isolates every individual categorical text value and numerical field into independent vector dimensions via localized runtimes.</p>
+        <section id="how-it-works" class="mt-20 pt-12 border-t border-slate-800">
+            <h2 class="text-2xl font-bold text-white mb-6 tracking-tight text-center">Engine Mathematical Foundations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6">
+                    <div class="text-cyan-400 font-mono font-bold text-sm mb-2">METHOD 01 //</div>
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Gaussian Mathematical Noise</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        For quantitative columns (integers/floats), the parser isolates the mean and standard variance arrays. New instances are synthesized utilizing a Box-Muller transformation pipeline to introduce controlled mathematical noise without breaking data integrity profiles.
+                    </p>
                 </div>
-                <div class="p-5 rounded-2xl bg-slate-900/20 border border-slate-900">
-                    <div class="text-xs font-bold text-emerald-400 mb-2 uppercase tracking-wide">Phase 2</div>
-                    <h4 class="text-white font-semibold mb-1.5 text-sm">Bootstrap Probability Mapping</h4>
-                    <p class="text-slate-400 text-xs leading-relaxed">Calculates frequency weights and cumulative distributions $P(X)$ to map completely new configurations while matching the parent dataset's exact entropy profiles.</p>
-                </div>
-                <div class="p-5 rounded-2xl bg-slate-900/20 border border-slate-900">
-                    <div class="text-xs font-bold text-emerald-400 mb-2 uppercase tracking-wide">Phase 3</div>
-                    <h4 class="text-white font-semibold mb-1.5 text-sm">Zero Data Leakage Execution</h4>
-                    <p class="text-slate-400 text-xs leading-relaxed">Since calculations compile in client memory using localized engines, no raw arrays are dispatched over remote pipelines, securing enterprise privacy compliance.</p>
+                <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6">
+                    <div class="text-blue-400 font-mono font-bold text-sm mb-2">METHOD 02 //</div>
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Bootstrap Probability Sampling</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        For discrete/categorical data features (strings, text classes), our client configuration applies random sampling loops with replacement. This system ensures category weights remain statistically uniform across expanded synthetic tables.
+                    </p>
                 </div>
             </div>
         </section>
 
     </main>
 
-  <script>
-        let uploadedDataFrame = null;
-        let generatedDataFrame = null;
+    <footer id="legal" class="border-t border-slate-800 bg-slate-950 py-8 px-6 text-center text-xs text-slate-500 space-y-3 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 SynthetixAI. Calculated client-side. Zero server data footprints.</p>
+            <div class="space-x-4">
+                <a href="#" class="hover:underline">Privacy Policy</a>
+                <a href="#" class="hover:underline">Terms of Service</a>
+                <a href="#" class="hover:underline">Contact Information</a>
+            </div>
+        </div>
+        <p class="max-w-xl mx-auto leading-relaxed text-slate-600">
+            Disclaimer: We utilize cookies and modern structural ad placements to scale this free tool asset. No uploaded analytical files touch cloud networks; vectors exist purely inside local memory cache layers.
+        </p>
+    </footer>
 
+    <script>
+        // Global container holding the active Danfo DataFrame object reference
+        let activeDataFrame = null;
+        let syntheticDataFrame = null;
+
+        // DOM element handles
         const dropZone = document.getElementById('drop-zone');
-        const fileInput = document.getElementById('file-input');
-        const configPanel = document.getElementById('config-panel');
-        const loaderPanel = document.getElementById('loader-panel');
+        const fileInput = document.getElementById('csv-file-input');
+        const controlPanel = document.getElementById('control-panel');
+        const loader = document.getElementById('processing-loader');
         const downloadPanel = document.getElementById('download-panel');
-        const fileDetails = document.getElementById('file-details');
-        const btnProcess = document.getElementById('btn-process');
-        const btnDownload = document.getElementById('btn-download');
 
+        // Setup drop-zone click events
         dropZone.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-emerald-500/50'); });
-        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-emerald-500/50'));
+        
+        // Handle physical file additions
+        fileInput.addEventListener('change', (e) => handleFileObject(e.target.files[0]));
+
+        // Dragover visual loops
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-cyan-500'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-cyan-500'));
         dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
-            dropZone.classList.remove('border-emerald-500/50');
-            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+            dropZone.classList.remove('border-cyan-500');
+            if (e.dataTransfer.files.length) handleFileObject(e.dataTransfer.files[0]);
         });
-        fileInput.addEventListener('change', (e) => { if (e.target.files.length) handleFile(e.target.files[0]); });
 
-        function handleFile(file) {
-            if (!file.name.endsWith('.csv')) { alert('Error: Please provide an active structured text CSV file configuration format.'); return; }
-            fileDetails.innerText = `Successfully read matrix file vector pointer: "${file.name}" (${(file.size/1024).toFixed(2)} KB)`;
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const csvText = e.target.result;
-                    const rows = csvText.split('\n').map(r => r.trim()).filter(r => r.length > 0);
-                    if(rows.length < 2) { alert('Insufficient rows to compute statistical profile matrix maps.'); return; }
+        // Parse file via Danfo.js readCSV framework
+        function handleFileObject(file) {
+            if (!file || !file.name.endsWith('.csv')) {
+                alert('Invalid matrix format. Please drop a verified CSV structural file.');
+                return;
+            }
+
+            // Update UI sizing values
+            document.getElementById('file-size').innerText = (file.size / 1024).toFixed(1) + ' KB';
+            loader.classList.remove('hidden');
+            controlPanel.classList.add('hidden');
+            downloadPanel.classList.add('hidden');
+
+            // Pass file directly to DanfoJS runtime
+            dfd.readCSV(file)
+                .then(df => {
+                    activeDataFrame = df;
+                    document.getElementById('meta-rows').innerText = df.shape[0];
+                    document.getElementById('meta-cols').innerText = df.shape[1];
                     
-                    const header = rows[0].split(',');
-                    const data = [];
-                    for(let i=1; i<rows.length; i++) {
-                        const cols = rows[i].split(',');
-                        if(cols.length === header.length) {
-                            // सुपर सेफ्टी लेयर: अगर रो (Row) में कोई भी वैल्यू खाली या अनफाइंड है, तो उसे यहीं "NA" कर दो
-                            const cleanedCols = cols.map(val => {
-                                return (val === undefined || val === null || val === "" || val.trim() === "") ? "NA" : val;
-                            });
-                            data.push(cleanedCols);
-                        }
-                    }
-                    
-                    uploadedDataFrame = new dfd.DataFrame(data, { columns: header });
-                    configPanel.classList.remove('hidden');
-                    downloadPanel.classList.add('hidden');
-                } catch(err) {
-                    alert('Data Parsing Error occurred compiling array frame logic.');
-                }
-            };
-            reader.readAsText(file);
+                    loader.classList.add('hidden');
+                    controlPanel.classList.remove('hidden');
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Parser error reading matrix values.');
+                    loader.classList.add('hidden');
+                });
         }
 
-        btnProcess.addEventListener('click', () => {
-            if(!uploadedDataFrame) return;
-            configPanel.classList.add('hidden');
-            loaderPanel.classList.remove('hidden');
+        // Processing / Generation Logic Execution Setup
+        document.getElementById('btn-generate').addEventListener('click', () => {
+            if (!activeDataFrame) return;
 
+            const targetRowCount = parseInt(document.getElementById('generation-count').value);
+            const strategy = document.getElementById('generation-strategy').value;
+
+            controlPanel.classList.add('hidden');
+            loader.classList.remove('hidden');
+
+            // Use a short setTimeout to let the browser draw the loading spinner before lock
             setTimeout(() => {
                 try {
-                    const factor = parseFloat(document.getElementById('augmentation-factor').value);
-                    const targetRowCount = Math.floor(uploadedDataFrame.shape[0] * factor);
-                    const columns = uploadedDataFrame.columns;
-                    const columnsData = {};
+                    const columns = activeDataFrame.columns;
+                    const generatedData = {};
 
+                    // Loop through each column independently to calculate and augment
                     columns.forEach(colName => {
-                        const colSeries = uploadedDataFrame[colName];
-                        
-                        // जावास्क्रिप्ट एरे में कन्वर्ट करके पूरी तरह से सेफ प्रोसेसिंग करेंगे
-                        const rawValues = colSeries.values.map(v => (v === undefined || v === null || v === "") ? "NA" : v);
-                        
-                        // यूनिक वैल्यूज और उनके काउंट्स को कोर JS से निकालेंगे ताकि Danfo.js क्रैश न हो
-                        const uniqueValues = [...new Set(rawValues)];
-                        const valueCounts = {};
-                        rawValues.forEach(v => { valueCounts[v] = (valueCounts[v] || 0) + 1; });
-                        
-                        const totalElements = rawValues.length;
-                        const probabilities = [];
-                        
-                        uniqueValues.forEach(val => {
-                            const count = valueCounts[val] || 1;
-                            probabilities.push(count / totalElements);
-                        });
+                        const currentSeries = activeDataFrame[colName];
+                        const dataType = currentSeries.dtypes[0];
+                        const tempArray = [];
 
-                        const colGeneratedArray = [];
-                        for(let i=0; i<targetRowCount; i++) {
-                            colGeneratedArray.push(weightedRandomSample(uniqueValues, probabilities));
+                        if (strategy === 'gaussian' && (dataType === 'float32' || dataType === 'int32')) {
+                            // Compute metric distributions using DanfoJS statistical engines
+                            const mean = currentSeries.mean();
+                            const stdDev = currentSeries.std();
+
+                            // Use Box-Muller transform to generate noise vectors centered around existing mean
+                            for (let i = 0; i < targetRowCount; i++) {
+                                let u1 = Math.random();
+                                let u2 = Math.random();
+                                let normalNoise = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+                                let syntheticVal = mean + normalNoise * stdDev;
+                                
+                                // Clean integer limits if baseline column was typed as int
+                                tempArray.push(dataType === 'int32' ? Math.round(syntheticVal) : parseFloat(syntheticVal.toFixed(4)));
+                            }
+                        } else {
+                            // Bootstrap Strategy / Fallback for string classes - Randomized sampling with replacement
+                            const baselineValues = currentSeries.values;
+                            const length = baselineValues.length;
+                            for (let i = 0; i < targetRowCount; i++) {
+                                const randomIndex = Math.floor(Math.random() * length);
+                                tempArray.push(baselineValues[randomIndex]);
+                            }
                         }
-                        columnsData[colName] = colGeneratedArray;
+                        generatedData[colName] = tempArray;
                     });
 
-                    generatedDataFrame = new dfd.DataFrame(columnsData, { columns: columns });
-                    loaderPanel.classList.add('hidden');
+                    // Wrap new arrays into a brand-new clean Output DataFrame
+                    syntheticDataFrame = new dfd.DataFrame(generatedData);
+                    
+                    loader.classList.add('hidden');
                     downloadPanel.classList.remove('hidden');
-                } catch (e) {
-                    console.error(e);
-                    loaderPanel.classList.add('hidden');
-                    configPanel.classList.remove('hidden');
-                    alert('An optimization mathematical compiling runtime execution error occurred.');
+                } catch (error) {
+                    console.error(error);
+                    alert('Mathematics calculation error running distributions.');
+                    loader.classList.add('hidden');
+                    controlPanel.classList.remove('hidden');
                 }
-            }, 750);
+            }, 50);
         });
 
-        function weightedRandomSample(values, probabilities) {
-            const rand = Math.random();
-            let cumulativeProb = 0;
-            for (let i = 0; i < values.length; i++) {
-                cumulativeProb += probabilities[i];
-                if (rand <= cumulativeProb) return values[i];
+        // Trigger native file downloads with an infallible vanilla JS fallback structure
+        document.getElementById('btn-download').addEventListener('click', () => {
+            if (!syntheticDataFrame) return;
+            
+            try {
+                // Try executing native Danfo wrapper link dump
+                dfd.toCSV(syntheticDataFrame, { 
+                    fileName: "augmented_synthetic_dataset.csv", 
+                    download: true 
+                });
+            } catch (fallbackError) {
+                console.log("Danfo engine direct download bypassed. Triggering local memory blob export...");
+                
+                // Bulletproof browser buffer compilation fallback
+                const csvString = syntheticDataFrame.to_csv();
+                const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                
+                link.setAttribute("href", url);
+                link.setAttribute("download", "augmented_synthetic_dataset.csv");
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             }
-            return values[values.length - 1];
-        }
-
-        btnDownload.addEventListener('click', () => {
-            if(!generatedDataFrame) return;
-            const csvContent = dfd.toCSV(generatedDataFrame);
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.setAttribute("href", url);
-            link.setAttribute("download", "augmented_synthetic_dataset.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
         });
     </script>
 </body>
