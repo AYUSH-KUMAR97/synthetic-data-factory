@@ -15,20 +15,32 @@
 
     <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <span class="text-2xl font-black tracking-tight bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                    SynthetixAI
-                </span>
-                <span class="text-xs bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded-full font-mono">v2.0</span>
+            
+            <div class="flex items-center space-x-3 group cursor-pointer">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 border border-cyan-400/30 transition-transform duration-300 group-hover:scale-105">
+                    <svg class="w-5 h-5 text-slate-900 transform group-hover:rotate-90 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                    </svg>
+                </div>
+                
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-tight bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent leading-none">
+                        SynthetixAI
+                    </span>
+                    <span class="text-[10px] text-slate-500 font-mono tracking-widest uppercase mt-0.5">Data Engine</span>
+                </div>
+                <span class="text-xs bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded-full font-mono self-center">v2.0</span>
             </div>
+
             <nav class="text-sm text-slate-400 space-x-6 flex items-center">
-               <a href="#how-it-works" class="hover:text-slate-200 transition font-medium">How it Works</a>
-               <a href="#legal" class="hover:text-slate-200 transition font-medium">Privacy</a>
+               <a href="#how-it-works" class="hover:text-slate-200 transition font-medium hidden sm:inline-block">How it Works</a>
+               <a href="#legal" class="hover:text-slate-200 transition font-medium hidden sm:inline-block">Privacy</a>
                
-               <a href="https://www.effectivecpmnetwork.com/s32xg73aze?key=5c689da5e91dfd6a690ae4fbb7e8bf04" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-xl transition font-mono text-xs flex items-center gap-1">
+               <a href="https://www.effectivecpmnetwork.com/s32xg73aze?key=5c689da5e91dfd6a690ae4fbb7e8bf04" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-xl transition font-mono text-xs flex items-center gap-1 shadow-md hover:shadow-cyan-500/10 active:scale-95">
                    Get Source Code 🚀
                </a>
             </nav>
+
         </div>
     </header>
 
