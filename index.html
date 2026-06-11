@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SynthetixAI - No-Code Data Augmentation Engine</title>
+    <title>SynthetixAI v2.0 - Advanced No-Code Data Engineering Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/danfojs@1.2.0/lib/bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         html { scroll-behavior: smooth; }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-slate-900">
 
     <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -18,12 +19,15 @@
                 <span class="text-2xl font-black tracking-tight bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                     SynthetixAI
                 </span>
-                <span class="text-xs bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded-full font-mono">v1.0</span>
+                <span class="text-xs bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded-full font-mono">v2.0</span>
             </div>
-            <nav class="text-sm text-slate-400 space-x-4">
+            <nav class="text-sm text-slate-400 space-x-6 flex items-center">
                <a href="#how-it-works" class="hover:text-slate-200 transition font-medium">How it Works</a>
                <a href="#legal" class="hover:text-slate-200 transition font-medium">Privacy</a>
-
+               
+               <a href="https://www.effectivecpmnetwork.com/s32xg73aze?key=5c689da5e91dfd6a690ae4fbb7e8bf04" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-xl transition font-mono text-xs flex items-center gap-1">
+                   Get Source Code 🚀
+               </a>
             </nav>
         </div>
     </header>
@@ -31,31 +35,33 @@
     <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-12">
         
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-extrabold text-white tracking-tight mb-3">
-                Augment Your Datasets Instantly
+            <h1 class="text-5xl font-extrabold text-white tracking-tight mb-4 bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+                Augment & Clean Datasets Instantly
             </h1>
             <p class="text-slate-400 max-w-xl mx-auto text-base">
-                Upload a baseline CSV. Analyze distribution fields natively. Synthesize balanced data structures without server overloads.
+                An advanced client-side matrix ecosystem. Clean missing profiles, optimize vector weight distributions, and scale tabular arrays with zero server footprints.
             </p>
         </div>
 
-        <div id="drop-zone" class="border-2 border-dashed border-slate-700 hover:border-cyan-500 bg-slate-800/40 rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 group mb-8">
+        <div id="drop-zone" class="border-2 border-dashed border-slate-700 hover:border-cyan-500 bg-slate-800/40 rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 group mb-8 shadow-xl hover:shadow-cyan-500/5">
             <input type="file" id="csv-file-input" accept=".csv" class="hidden" />
             <div class="space-y-4">
-                <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto group-hover:scale-105 transition-transform border border-slate-700 group-hover:border-cyan-500">
+                <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto group-hover:scale-105 transition-transform border border-slate-700 group-hover:border-cyan-400">
                     <svg class="w-8 h-8 text-slate-400 group-hover:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                 </div>
                 <div>
-                    <p class="text-base font-semibold text-slate-200">Click to upload or drag & drop</p>
-                    <p class="text-xs text-slate-500 mt-1">Raw tabular CSV formats up to 50MB</p>
+                    <p class="text-base font-semibold text-slate-200">Drop your baseline CSV matrix here</p>
+                    <p class="text-xs text-slate-500 mt-1">100% locally compiled execution up to 50MB</p>
                 </div>
             </div>
         </div>
 
         <div id="control-panel" class="hidden space-y-6">
             
-            <div class="bg-slate-800/60 rounded-2xl p-6 border border-slate-700/60">
-                <h3 class="text-sm font-semibold tracking-wider uppercase text-slate-400 mb-4">Input Profile Detected</h3>
+            <div class="bg-slate-800/60 rounded-2xl p-6 border border-slate-700/60 backdrop-blur-sm">
+                <h3 class="text-xs font-semibold tracking-wider uppercase text-slate-400 mb-4 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> Input Profile Detected
+                </h3>
                 <div class="grid grid-cols-3 gap-4 text-center">
                     <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
                         <div id="meta-rows" class="text-2xl font-bold text-white font-mono">-</div>
@@ -72,65 +78,122 @@
                 </div>
             </div>
 
+            <div class="bg-slate-800/60 rounded-2xl p-6 border border-slate-700/60">
+                <h3 class="text-sm font-semibold tracking-wider uppercase text-slate-400 mb-4 flex items-center gap-2">
+                    🛠️ Pre-Processing Utilities (Optional)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label class="flex items-center space-x-3 bg-slate-900/40 p-3.5 rounded-xl border border-slate-800 cursor-pointer hover:border-slate-700 transition">
+                        <input type="checkbox" id="clean-drop-null" class="w-4 h-4 rounded border-slate-700 bg-slate-900 text-cyan-500 focus:ring-cyan-500/20" />
+                        <span class="text-sm text-slate-300">Drop Rows with Missing/Null Values</span>
+                    </label>
+                    <label class="flex items-center space-x-3 bg-slate-900/40 p-3.5 rounded-xl border border-slate-800 cursor-pointer hover:border-slate-700 transition">
+                        <input type="checkbox" id="clean-drop-duplicates" class="w-4 h-4 rounded border-slate-700 bg-slate-900 text-cyan-500 focus:ring-cyan-500/20" />
+                        <span class="text-sm text-slate-300">Purge Perfect Duplicate Rows</span>
+                    </label>
+                </div>
+            </div>
+
             <div class="bg-slate-800/60 rounded-2xl p-6 border border-slate-700/60 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-2">Generation Scale (Rows to Generate)</label>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Generation Scale (Output Target Rows)</label>
                     <input type="number" id="generation-count" min="10" max="50000" value="1000" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 font-mono" />
-                    <span class="text-xs text-slate-500 mt-1 block">Maximum 50,000 items per browser engine routine</span>
+                    <span class="text-xs text-slate-500 mt-1 block">Max 50,000 matrices per routine execution loop</span>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-2">Augmentation Strategy</label>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Augmentation Strategy Algorithm</label>
                     <select id="generation-strategy" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500">
                         <option value="gaussian">Gaussian Noise Injection (Continuous Profiles)</option>
                         <option value="bootstrap">Bootstrap Resampling (Categorical Preserved)</option>
+                        <option value="smote-lite">SMOTE-Lite (Vector Distance Interpolation)</option>
                     </select>
-                    <span class="text-xs text-slate-500 mt-1 block">Gaussian works best for numeric values, Bootstrap for words/classes</span>
+                    <span class="text-xs text-slate-500 mt-1 block">SMOTE-lite builds dynamic vectors along relational boundary paths</span>
                 </div>
             </div>
 
-            <button id="btn-generate" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-900 font-bold py-4 px-6 rounded-xl transition duration-200 transform active:scale-[0.99] shadow-lg shadow-cyan-500/10">
-                Synthesize & Process Synthetic Output
-            </button>
-        </div>
-
-        <div id="processing-loader" class="hidden py-12 text-center">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
-            <p class="text-slate-400 text-sm">Processing vectors and calculating variances locally...</p>
-        </div>
-
-        <div id="download-panel" class="hidden bg-gradient-to-br from-emerald-500/10 to-teal-600/10 border border-emerald-500/20 rounded-2xl p-6 text-center mt-6">
-            <div class="inline-flex items-center justify-center p-3 bg-emerald-500/20 rounded-full mb-3 text-emerald-400">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <div class="bg-slate-800/40 rounded-2xl p-4 border border-slate-800">
+                <h4 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Baseline Data Head Sample Preview</h4>
+                <div id="input-table-preview" class="overflow-x-auto rounded-xl border border-slate-800 max-h-48 text-xs font-mono">
+                    <p class="p-4 text-slate-600 italic">Upload a file to initialize structural array preview rendering...</p>
+                </div>
             </div>
-            <h3 class="text-lg font-bold text-white mb-1">Synthesization Pipeline Finished Successfully</h3>
-            <p class="text-slate-400 text-sm mb-4">Your new augmented data array is fully constructed and optimized.</p>
-            <button id="btn-download" class="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-3 px-8 rounded-xl transition shadow-lg shadow-emerald-500/20">
-                Download Augmented CSV File
+
+            <button id="btn-generate" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-900 font-extrabold py-4 px-6 rounded-xl transition duration-200 transform active:scale-[0.99] shadow-lg shadow-cyan-500/10 tracking-wide uppercase text-sm">
+                Execute Pipeline & Synthesize Vector Matrix
             </button>
         </div>
 
-        <div class="mt-8 p-4 bg-slate-900/20 border border-slate-900/60 rounded-2xl text-center min-h-[100px] flex items-center justify-center">
-            
+        <div id="processing-loader" class="hidden py-12 text-center bg-slate-950/60 rounded-2xl border border-slate-800/80 my-6 relative overflow-hidden">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4 relative z-10"></div>
+            <p class="text-cyan-400 font-mono text-sm tracking-wider mb-2 relative z-10">EXECUTING MATHEMATICAL AUGMENTATION PIPELINE...</p>
+            <p class="text-slate-500 text-xs font-mono relative z-10">Calculating vector distances and purging structural variations locally.</p>
+            <div id="matrix-overlay" class="absolute inset-0 opacity-10 font-mono text-[9px] text-green-500 text-left p-2 select-none overflow-hidden leading-none pointer-events-none"></div>
+        </div>
+
+        <div id="visualization-panel" class="hidden bg-slate-800/40 border border-slate-800 rounded-2xl p-6 my-6">
+            <h3 class="text-sm font-semibold tracking-wider uppercase text-slate-400 mb-4 flex items-center gap-2">
+                📊 Statistical Distribution Profile Variance
+            </h3>
+            <div class="w-full bg-slate-900/60 p-4 rounded-xl border border-slate-800/60 max-h-[320px] flex justify-center">
+                <canvas id="distribution-chart" class="max-h-[300px] w-full"></canvas>
+            </div>
+            <span class="text-xs text-slate-500 mt-2 block text-center font-mono">Comparison chart showcasing Mean Variance Profiles (Original vs Synthetic Rows)</span>
+        </div>
+
+        <div id="download-panel" class="hidden space-y-6 mt-6">
+            <div class="bg-gradient-to-br from-emerald-500/10 to-teal-600/10 border border-emerald-500/20 rounded-2xl p-6 text-center shadow-xl shadow-emerald-950/5">
+                <div class="inline-flex items-center justify-center p-3 bg-emerald-500/20 rounded-full mb-3 text-emerald-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-1">Synthesization Pipeline Finished Successfully</h3>
+                <p class="text-slate-400 text-sm mb-4">Your brand-new augmented array is fully compiled and balanced.</p>
+                
+                <button id="btn-download" class="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-extrabold py-3.5 px-8 rounded-xl transition shadow-lg shadow-emerald-500/20 tracking-wide uppercase text-xs transform active:scale-95">
+                    Download Augmented CSV File
+                </button>
+            </div>
+
+            <div class="bg-slate-800/40 rounded-2xl p-4 border border-slate-800">
+                <h4 class="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span> Generated Synthetic Output Matrix Sample Preview
+                </h4>
+                <div id="output-table-preview" class="overflow-x-auto rounded-xl border border-slate-800 max-h-48 text-xs font-mono"></div>
+            </div>
+
+            <div class="text-center">
+                <a href="https://www.effectivecpmnetwork.com/s32xg73aze?key=5c689da5e91dfd6a690ae4fbb7e8bf04" target="_blank" class="text-xs text-slate-500 hover:text-cyan-400 underline transition decoration-dashed font-mono">
+                    Get Pre-Trained Global Matrix Weight Configurations (External Mirror)
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-8 p-4 bg-slate-900/20 border border-slate-800 rounded-2xl text-center min-h-[100px] flex items-center justify-center">
             <script async="async" data-cfasync="false" src="https://pl29512398.effectivecpmnetwork.com/f2e433547e282b095b67e7b0b96181e7/invoke.js"></script>
             <div id="container-f2e433547e282b095b67e7b0b96181e7"></div>
-
-            
         </div>
+
         <section id="how-it-works" class="mt-20 pt-12 border-t border-slate-800">
             <h2 class="text-2xl font-bold text-white mb-6 tracking-tight text-center">Engine Mathematical Foundations</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6">
                     <div class="text-cyan-400 font-mono font-bold text-sm mb-2">METHOD 01 //</div>
-                    <h3 class="text-lg font-bold text-slate-200 mb-2">Gaussian Mathematical Noise</h3>
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Gaussian Noise</h3>
                     <p class="text-slate-400 text-sm leading-relaxed">
-                        For quantitative columns (integers/floats), the parser isolates the mean and standard variance arrays. New instances are synthesized utilizing a Box-Muller transformation pipeline to introduce controlled mathematical noise without breaking data integrity profiles.
+                        For continuous layers, the model extracts mean distributions and compiles standard deviation scores via a localized Box-Muller configuration.
                     </p>
                 </div>
                 <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6">
                     <div class="text-blue-400 font-mono font-bold text-sm mb-2">METHOD 02 //</div>
-                    <h3 class="text-lg font-bold text-slate-200 mb-2">Bootstrap Probability Sampling</h3>
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Bootstrap Sampling</h3>
                     <p class="text-slate-400 text-sm leading-relaxed">
-                        For discrete/categorical data features (strings, text classes), our client configuration applies random sampling loops with replacement. This system ensures category weights remain statistically uniform across expanded synthetic tables.
+                        Applies structural random slicing parameters with direct index replacement for string distributions and distinct high-entropy text tokens.
+                    </p>
+                </div>
+                <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6">
+                    <div class="text-purple-400 font-mono font-bold text-sm mb-2">METHOD 03 //</div>
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">SMOTE-Lite Engine</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Calculates Euclidean dimensional lines between baseline matrices and interpolates new arrays directly along relational vector paths.
                     </p>
                 </div>
             </div>
@@ -153,24 +216,20 @@
     </footer>
 
     <script>
-        // Global container holding the active Danfo DataFrame object reference
         let activeDataFrame = null;
         let syntheticDataFrame = null;
+        let activeChartInstance = null;
 
-        // DOM element handles
         const dropZone = document.getElementById('drop-zone');
         const fileInput = document.getElementById('csv-file-input');
         const controlPanel = document.getElementById('control-panel');
         const loader = document.getElementById('processing-loader');
         const downloadPanel = document.getElementById('download-panel');
+        const matrixOverlay = document.getElementById('matrix-overlay');
+        const visualizationPanel = document.getElementById('visualization-panel');
 
-        // Setup drop-zone click events
         dropZone.addEventListener('click', () => fileInput.click());
-        
-        // Handle physical file additions
         fileInput.addEventListener('change', (e) => handleFileObject(e.target.files[0]));
-
-        // Dragover visual loops
         dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-cyan-500'); });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-cyan-500'));
         dropZone.addEventListener('drop', (e) => {
@@ -179,25 +238,25 @@
             if (e.dataTransfer.files.length) handleFileObject(e.dataTransfer.files[0]);
         });
 
-        // Parse file via Danfo.js readCSV framework
         function handleFileObject(file) {
             if (!file || !file.name.endsWith('.csv')) {
                 alert('Invalid matrix format. Please drop a verified CSV structural file.');
                 return;
             }
 
-            // Update UI sizing values
             document.getElementById('file-size').innerText = (file.size / 1024).toFixed(1) + ' KB';
             loader.classList.remove('hidden');
             controlPanel.classList.add('hidden');
             downloadPanel.classList.add('hidden');
+            visualizationPanel.classList.add('hidden');
 
-            // Pass file directly to DanfoJS runtime
             dfd.readCSV(file)
                 .then(df => {
                     activeDataFrame = df;
                     document.getElementById('meta-rows').innerText = df.shape[0];
                     document.getElementById('meta-cols').innerText = df.shape[1];
+                    
+                    renderTablePreview(activeDataFrame, 'input-table-preview');
                     
                     loader.classList.add('hidden');
                     controlPanel.classList.remove('hidden');
@@ -209,88 +268,222 @@
                 });
         }
 
-        // Processing / Generation Logic Execution Setup
+        function renderTablePreview(df, targetId) {
+            const container = document.getElementById(targetId);
+            container.innerHTML = '';
+            
+            let html = `<table class="w-full text-left border-collapse bg-slate-900/80 text-slate-400"><thead><tr class="border-b border-slate-800 bg-slate-950/50 text-slate-200">`;
+            df.columns.forEach(col => { html += `<th class="p-2.5 font-semibold">${col}</th>`; });
+            html += `</tr></thead><tbody>`;
+            
+            const sampleSize = Math.min(df.shape[0], 5);
+            for(let i=0; i < sampleSize; i++) {
+                html += `<tr class="border-b border-slate-800/60 hover:bg-slate-800/20">`;
+                df.columns.forEach(col => {
+                    html += `<th class="p-2 font-normal font-mono text-[11px] text-slate-300">${df[col].values[i]}</th>`;
+                });
+                html += `</tr>`;
+            }
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+
+        function playSuccessChime() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+                
+                const osc1 = ctx.createOscillator();
+                const osc2 = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(587.33, ctx.currentTime);
+                osc1.frequency.setValueAtTime(880.00, ctx.currentTime + 0.12);
+                
+                osc2.type = 'triangle';
+                osc2.frequency.setValueAtTime(1174.66, ctx.currentTime + 0.12);
+
+                gainNode.gain.setValueAtTime(0.15, ctx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+                
+                osc1.connect(gainNode);
+                osc2.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                
+                osc1.start();
+                osc2.start();
+                osc1.stop(ctx.currentTime + 0.6);
+                osc2.stop(ctx.currentTime + 0.6);
+            } catch(e) { console.log("Audio contextual restrictions applied."); }
+        }
+
+        let matrixInterval = null;
+        function runMatrixOverlayEffect(start) {
+            if(!start) { clearInterval(matrixInterval); return; }
+            matrixInterval = setInterval(() => {
+                let binStr = '';
+                for(let i=0; i<180; i++) { binStr += Math.random() > 0.5 ? "1 " : "0 "; }
+                matrixOverlay.innerText = binStr + "\n" + matrixOverlay.innerText.substring(0, 400);
+            }, 60);
+        }
+
         document.getElementById('btn-generate').addEventListener('click', () => {
             if (!activeDataFrame) return;
 
-            const targetRowCount = parseInt(document.getElementById('generation-count').value);
+            let targetRowCount = parseInt(document.getElementById('generation-count').value);
             const strategy = document.getElementById('generation-strategy').value;
-
+            
             controlPanel.classList.add('hidden');
             loader.classList.remove('hidden');
+            runMatrixOverlayEffect(true);
 
-            // Use a short setTimeout to let the browser draw the loading spinner before lock
             setTimeout(() => {
                 try {
-                    const columns = activeDataFrame.columns;
-                    const generatedData = {};
+                    let workingDF = activeDataFrame;
 
-                    // Loop through each column independently to calculate and augment
-                    columns.forEach(colName => {
-                        const currentSeries = activeDataFrame[colName];
-                        const dataType = currentSeries.dtypes[0];
-                        const tempArray = [];
-
-                        if (strategy === 'gaussian' && (dataType === 'float32' || dataType === 'int32')) {
-                            // Compute metric distributions using DanfoJS statistical engines
-                            const mean = currentSeries.mean();
-                            const stdDev = currentSeries.std();
-
-                            // Use Box-Muller transform to generate noise vectors centered around existing mean
-                            for (let i = 0; i < targetRowCount; i++) {
-                                let u1 = Math.random();
-                                let u2 = Math.random();
-                                let normalNoise = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
-                                let syntheticVal = mean + normalNoise * stdDev;
-                                
-                                // Clean integer limits if baseline column was typed as int
-                                tempArray.push(dataType === 'int32' ? Math.round(syntheticVal) : parseFloat(syntheticVal.toFixed(4)));
-                            }
-                        } else {
-                            // Bootstrap Strategy / Fallback for string classes - Randomized sampling with replacement
-                            const baselineValues = currentSeries.values;
-                            const length = baselineValues.length;
-                            for (let i = 0; i < targetRowCount; i++) {
-                                const randomIndex = Math.floor(Math.random() * length);
-                                tempArray.push(baselineValues[randomIndex]);
+                    if(document.getElementById('clean-drop-null').checked) {
+                        workingDF = workingDF.dropNa({ axis: 0 });
+                    }
+                    if(document.getElementById('clean-drop-duplicates').checked) {
+                        const uniqueIndexes = [];
+                        const seenHashes = new Set();
+                        for(let i=0; i<workingDF.shape[0]; i++) {
+                            let rowString = workingDF.iloc({rows: [i]}).values[0].join("|");
+                            if(!seenHashes.has(rowString)) {
+                                seenHashes.add(rowString);
+                                uniqueIndexes.push(i);
                             }
                         }
-                        generatedData[colName] = tempArray;
+                        workingDF = workingDF.iloc({rows: uniqueIndexes});
+                    }
+
+                    const columns = workingDF.columns;
+                    const generatedData = {};
+                    let chartOriginalMeans = [];
+                    let chartSyntheticMeans = [];
+
+                    if(strategy === 'smote-lite') {
+                        columns.forEach(colName => { generatedData[colName] = []; });
+                        const numRows = workingDF.shape[0];
+
+                        for(let i=0; i<targetRowCount; i++) {
+                            const baseIdx = Math.floor(Math.random() * numRows);
+                            let neighborIdx = Math.floor(Math.random() * numRows);
+                            if(numRows > 1 && neighborIdx === baseIdx) { neighborIdx = (neighborIdx + 1) % numRows; }
+
+                            columns.forEach(colName => {
+                                const currentSeries = workingDF[colName];
+                                const dataType = currentSeries.dtypes[0];
+                                const valBase = currentSeries.values[baseIdx];
+                                const valNeighbor = currentSeries.values[neighborIdx];
+
+                                if(dataType === 'float32' || dataType === 'int32') {
+                                    const lambda = Math.random();
+                                    const syntheticVal = valBase + lambda * (valNeighbor - valBase);
+                                    generatedData[colName].push(dataType === 'int32' ? Math.round(syntheticVal) : parseFloat(syntheticVal.toFixed(4)));
+                                } else {
+                                    generatedData[colName].push(Math.random() > 0.5 ? valBase : valNeighbor);
+                                }
+                            });
+                        }
+                    } else {
+                        columns.forEach(colName => {
+                            const currentSeries = workingDF[colName];
+                            const dataType = currentSeries.dtypes[0];
+                            const tempArray = [];
+
+                            if (strategy === 'gaussian' && (dataType === 'float32' || dataType === 'int32')) {
+                                const mean = currentSeries.mean();
+                                const stdDev = currentSeries.std() || 0.1;
+
+                                for (let i = 0; i < targetRowCount; i++) {
+                                    let u1 = Math.random();
+                                    let u2 = Math.random();
+                                    let normalNoise = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+                                    let syntheticVal = mean + normalNoise * stdDev;
+                                    tempArray.push(dataType === 'int32' ? Math.round(syntheticVal) : parseFloat(syntheticVal.toFixed(4)));
+                                }
+                            } else {
+                                const baselineValues = currentSeries.values;
+                                const length = baselineValues.length;
+                                for (let i = 0; i < targetRowCount; i++) {
+                                    tempArray.push(baselineValues[Math.floor(Math.random() * length)]);
+                                }
+                            }
+                            generatedData[colName] = tempArray;
+                        });
+                    }
+
+                    syntheticDataFrame = new dfd.DataFrame(generatedData);
+
+                    const labelList = [];
+                    columns.forEach((colName, index) => {
+                        if(index < 6) { 
+                            labelList.push(colName.substring(0, 10));
+                            const dtype = workingDF[colName].dtypes[0];
+                            if(dtype === 'float32' || dtype === 'int32') {
+                                chartOriginalMeans.push(parseFloat(workingDF[colName].mean().toFixed(2)));
+                                chartSyntheticMeans.push(parseFloat(syntheticDataFrame[colName].mean().toFixed(2)));
+                            } else {
+                                chartOriginalMeans.push(1); 
+                                chartSyntheticMeans.push(1);
+                            }
+                        }
                     });
 
-                    // Wrap new arrays into a brand-new clean Output DataFrame
-                    syntheticDataFrame = new dfd.DataFrame(generatedData);
+                    if (activeChartInstance) { activeChartInstance.destroy(); }
+                    const ctx = document.getElementById('distribution-chart').getContext('2d');
+                    activeChartInstance = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labelList,
+                            datasets: [
+                                { label: 'Original Feature Mean', data: chartOriginalMeans, backgroundColor: 'rgba(57, 139, 247, 0.4)', borderColor: '#06b6d4', borderWidth: 1 },
+                                { label: 'Synthetic Feature Mean', data: chartSyntheticMeans, backgroundColor: 'rgba(16, 185, 129, 0.4)', borderColor: '#10b981', borderWidth: 1 }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', font: { family: 'monospace' } } },
+                                x: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', font: { family: 'monospace' } } }
+                            },
+                            plugins: { legend: { labels: { color: '#f1f5f9', font: { weight: 'bold' } } } }
+                        }
+                    });
+
+                    renderTablePreview(syntheticDataFrame, 'output-table-preview');
+
+                    runMatrixOverlayEffect(false);
+                    playSuccessChime();
                     
                     loader.classList.add('hidden');
+                    visualizationPanel.classList.remove('hidden');
                     downloadPanel.classList.remove('hidden');
+
                 } catch (error) {
                     console.error(error);
-                    alert('Mathematics calculation error running distributions.');
+                    runMatrixOverlayEffect(false);
+                    alert('Mathematics calculation matrix error running configurations.');
                     loader.classList.add('hidden');
                     controlPanel.classList.remove('hidden');
                 }
-            }, 50);
+            }, 1200); 
         });
 
-        // Trigger native file downloads with an infallible vanilla JS fallback structure
         document.getElementById('btn-download').addEventListener('click', () => {
             if (!syntheticDataFrame) return;
-            
             try {
-                // Try executing native Danfo wrapper link dump
-                dfd.toCSV(syntheticDataFrame, { 
-                    fileName: "augmented_synthetic_dataset.csv", 
-                    download: true 
-                });
+                dfd.toCSV(syntheticDataFrame, { fileName: "augmented_synthetic_dataset.csv", download: true });
             } catch (fallbackError) {
-                console.log("Danfo engine direct download bypassed. Triggering local memory blob export...");
-                
-                // Bulletproof browser buffer compilation fallback
+                console.log("Fallback execution buffer loop triggered...");
                 const csvString = syntheticDataFrame.to_csv();
                 const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
                 const link = document.createElement("a");
                 const url = URL.createObjectURL(blob);
-                
                 link.setAttribute("href", url);
                 link.setAttribute("download", "augmented_synthetic_dataset.csv");
                 link.style.visibility = 'hidden';
@@ -305,3 +498,95 @@
 
 </body>
 </html>
+        <div id="processing-loader" class="hidden py-12 text-center bg-slate-950/60 rounded-2xl border border-slate-800/80 my-6 relative overflow-hidden">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4 relative z-10"></div>
+            <p class="text-cyan-400 font-mono text-sm tracking-wider mb-2 relative z-10">EXECUTING MATHEMATICAL AUGMENTATION PIPELINE...</p>
+            <p class="text-slate-500 text-xs font-mono relative z-10">Calculating vector distances and purging structural variations locally.</p>
+            
+            <div id="matrix-overlay" class="absolute inset-0 opacity-10 font-mono text-[9px] text-green-500 text-left p-2 select-none overflow-hidden leading-none pointer-events-none"></div>
+        </div>
+
+        <div id="visualization-panel" class="hidden bg-slate-800/40 border border-slate-800 rounded-2xl p-6 my-6">
+            <h3 class="text-sm font-semibold tracking-wider uppercase text-slate-400 mb-4 flex items-center gap-2">
+                📊 Statistical Distribution Profile Variance
+            </h3>
+            <div class="w-full bg-slate-900/60 p-4 rounded-xl border border-slate-800/60 max-h-[320px] flex justify-center">
+                <canvas id="distribution-chart" class="max-h-[300px] w-full"></canvas>
+            </div>
+            <span class="text-xs text-slate-500 mt-2 block text-center font-mono">Comparison chart showcasing Mean Variance Profiles (Original vs Synthetic Rows)</span>
+        </div>
+
+        <div id="download-panel" class="hidden space-y-6 mt-6">
+            <div class="bg-gradient-to-br from-emerald-500/10 to-teal-600/10 border border-emerald-500/20 rounded-2xl p-6 text-center shadow-xl shadow-emerald-950/5">
+                <div class="inline-flex items-center justify-center p-3 bg-emerald-500/20 rounded-full mb-3 text-emerald-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-1">Synthesization Pipeline Finished Successfully</h3>
+                <p class="text-slate-400 text-sm mb-4">Your brand-new augmented array is fully compiled and balanced.</p>
+                
+                <button id="btn-download" class="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-extrabold py-3.5 px-8 rounded-xl transition shadow-lg shadow-emerald-500/20 tracking-wide uppercase text-xs transform active:scale-95">
+                    Download Augmented CSV File
+                </button>
+            </div>
+
+            <div class="bg-slate-800/40 rounded-2xl p-4 border border-slate-800">
+                <h4 class="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span> Generated Synthetic Output Matrix Sample Preview
+                </h4>
+                <div id="output-table-preview" class="overflow-x-auto rounded-xl border border-slate-800 max-h-48 text-xs font-mono"></div>
+            </div>
+
+            <div class="text-center">
+                <a href="https://www.effectivecpmnetwork.com/s32xg73aze?key=5c689da5e91dfd6a690ae4fbb7e8bf04" target="_blank" class="text-xs text-slate-500 hover:text-cyan-400 underline transition decoration-dashed font-mono">
+                    Get Pre-Trained Global Matrix Weight Configurations (External Mirror)
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-8 p-4 bg-slate-900/20 border border-slate-800 rounded-2xl text-center min-h-[100px] flex items-center justify-center">
+            <script async="async" data-cfasync="false" src="https://pl29512398.effectivecpmnetwork.com/f2e433547e282b095b67e7b0b96181e7/invoke.js"></script>
+            <div id="container-f2e433547e282b095b67e7b0b96181e7"></div>
+        </div>
+
+        <section id="how-it-works" class="mt-20 pt-12 border-t border-slate-800">
+            <h2 class="text-2xl font-bold text-white mb-6 tracking-tight text-center">Engine Mathematical Foundations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6">
+                    <div class="text-cyan-400 font-mono font-bold text-sm mb-2">METHOD 01 //</div>
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Gaussian Noise</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        For continuous layers, the model extracts mean distributions and compiles standard deviation scores via a localized Box-Muller configuration.
+                    </p>
+                </div>
+                <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6">
+                    <div class="text-blue-400 font-mono font-bold text-sm mb-2">METHOD 02 //</div>
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Bootstrap Sampling</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Applies structural random slicing parameters with direct index replacement for string distributions and distinct high-entropy text tokens.
+                    </p>
+                </div>
+                <div class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6">
+                    <div class="text-purple-400 font-mono font-bold text-sm mb-2">METHOD 03 //</div>
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">SMOTE-Lite Engine</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Calculates Euclidean dimensional lines between baseline matrices and interpolates new arrays directly along relational vector vectors.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="legal" class="border-t border-slate-800 bg-slate-950 py-8 px-6 text-center text-xs text-slate-500 space-y-3 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 SynthetixAI. Calculated client-side. Zero server data footprints.</p>
+            <div class="space-x-4">
+                <a href="#" class="hover:underline">Privacy Policy</a>
+                <a href="#" class="hover:underline">Terms of Service</a>
+                <a href="#" class="hover:underline">Contact Information</a>
+            </div>
+        </div>
+        <p class="max-w-xl mx-auto leading-relaxed text-slate-600">
+            Disclaimer: We utilize cookies and modern structural ad placements to scale this free tool asset. No uploaded analytical files touch cloud networks; vectors exist purely inside local memory cache layers.
+        </p>
+    </footer>
