@@ -482,11 +482,11 @@
     <footer id="legal" class="border-t border-slate-800 bg-slate-950 py-8 px-6 text-center text-xs text-slate-500 space-y-3 mt-12">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <p>&copy; 2026 SynthetixAI. Calculated client-side. Zero server data footprints.</p>
-            <div class="space-x-4">
-                <a href="#" class="hover:underline">Privacy Policy</a>
-                <a href="#" class="hover:underline">Terms of Service</a>
-                <a href="#" class="hover:underline">Contact Information</a>
-            </div>
+           <div class="flex flex-wrap justify-center gap-6 text-xs font-mono text-slate-500">
+               <a href="javascript:void(0)" onclick="toggleModal('modal-privacy')" class="hover:text-cyan-400 transition">Privacy Policy</a>
+               <a href="javascript:void(0)" onclick="toggleModal('modal-terms')" class="hover:text-purple-400 transition">Terms of Service</a>
+               <a href="javascript:void(0)" onclick="toggleModal('modal-contact')" class="hover:text-indigo-400 transition">Contact Info</a>
+           </div>
         </div>
         <p class="max-w-xl mx-auto leading-relaxed text-slate-600">
             Disclaimer: We utilize cookies and modern structural ad placements to scale this free tool asset. No uploaded analytical files touch cloud networks; vectors exist purely inside local memory cache layers.
@@ -1046,7 +1046,60 @@
                 }
             });
         }
+        // 🔒 TOGGLE POPUP MODALS FUNCTION
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.toggle('hidden');
+            }
+        }
     </script>
+    <div id="modal-privacy" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full max-h-[80vh] flex flex-col shadow-2xl">
+            <div class="p-5 border-b border-slate-800 flex justify-between items-center">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-cyan-400 font-mono">🔒 Privacy Policy</h3>
+                <button onclick="toggleModal('modal-privacy')" class="text-slate-500 hover:text-white font-mono text-xs">Close [X]</button>
+            </div>
+            <div class="p-6 overflow-y-auto text-xs text-slate-400 font-mono space-y-4 leading-relaxed">
+                <p class="text-slate-300 font-semibold">Effective Date: June 24, 2026</p>
+                <p>SynthetixAI operates as a 100% client-side, serverless application. We do not host, store, or upload any datasets, financial matrices, or user data to external servers or cloud structures.</p>
+                <p><span class="text-white">Data Processing:</span> All matrix calculations, including SMOTE-Lite operations, Gaussian adjustments, and visual budget matrix logging, are executed entirely within your local browser's cache and execution pool.</p>
+                <p><span class="text-white">Cookies & Logs:</span> We do not deploy analytical tracking cookies or cross-site tracking mechanisms. Your local data stays on your local machine.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-terms" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full max-h-[80vh] flex flex-col shadow-2xl">
+            <div class="p-5 border-b border-slate-800 flex justify-between items-center">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-purple-400 font-mono">📜 Terms of Service</h3>
+                <button onclick="toggleModal('modal-terms')" class="text-slate-500 hover:text-white font-mono text-xs">Close [X]</button>
+            </div>
+            <div class="p-6 overflow-y-auto text-xs text-slate-400 font-mono space-y-4 leading-relaxed">
+                <p class="text-slate-300 font-semibold">Last Updated: June 2026</p>
+                <p>By accessing SynthetixAI (synthetixdata.in), you acknowledge and agree to the following operational parameters:</p>
+                <p><span class="text-white">Usage Scope:</span> This serverless system is provided for mathematical testing, exploratory data analysis (EDA), and local financial ledger management. Outputs are generated based on mathematical vector formulas computed locally.</p>
+                <p><span class="text-white">No Liability:</span> Since data augmentation and descriptive analytics are performed client-side without permanent computational logging, SynthetixAI holds no liability for specific evaluation variances in external deployment frameworks.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-contact" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full shadow-2xl">
+            <div class="p-5 border-b border-slate-800 flex justify-between items-center">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-indigo-400 font-mono">✉️ Contact Info</h3>
+                <button onclick="toggleModal('modal-contact')" class="text-slate-500 hover:text-white font-mono text-xs">Close [X]</button>
+            </div>
+            <div class="p-6 text-xs text-slate-400 font-mono space-y-4">
+                <p>Have questions regarding the serverless EDA algorithms or corporate implementation pipelines?</p>
+                <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-4 space-y-2">
+                    <div class="flex justify-between"><span>Developer:</span><span class="text-white">Ayush Kumar</span></div>
+                    <div class="flex justify-between"><span>Project Link:</span><span class="text-cyan-400">synthetixdata.in</span></div>
+                    <div class="flex justify-between"><span>Support Channel:</span><span class="text-slate-300">In-Browser Terminal</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
