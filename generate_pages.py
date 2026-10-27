@@ -1,9 +1,9 @@
 import os
 
-# Create an output directory for our programmatic SEO landing pages
+
 os.makedirs("guide", exist_ok=True)
 
-# Master database array containing highly searched data science terms
+
 topics = [
     {"slug": "augmenting-logistic-regression-data", "title": "Data Augmentation for Logistic Regression Models", "metric": "Gaussian Noise Transformation", "usecase": "Binary classification datasets with heavy sample imbalance."},
     {"slug": "linear-regression-synthetic-expansion", "title": "Expanding Linear Regression Sample Arrays Natively", "metric": "Continuous Vector Perturbation", "usecase": "Continuous numeric prediction feature frames lacking density."},
@@ -13,7 +13,7 @@ topics = [
     {"slug": "svm-hyperplane-boundary-augmentation", "title": "Augmenting Support Vector Machine Hyperplane Boundaries", "metric": "Vector Boundary Scaling", "usecase": "Marginal classification tasks with overlapping multi-class labels."}
 ]
 
-# The baseline HTML template structure with a uniform, polished layout
+
 html_template = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,19 +63,19 @@ html_template = """<!DOCTYPE html>
 </html>
 """
 
-# Execute the writing generation loop
+
 generated_count = 0
 for topic in topics:
     file_path = os.path.join("guide", f"{topic['slug']}.html")
     
-    # Format the template with our structural topic data
+    
     formatted_html = html_template.format(
         title=topic['title'],
         metric=topic['metric'],
         usecase=topic['usecase']
     )
     
-    # Save the file to disk cleanly
+
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(formatted_html)
     generated_count += 1
