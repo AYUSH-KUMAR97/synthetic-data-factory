@@ -130,6 +130,3 @@ This creates or overwrites the six HTML files in [`guide/`](./guide).
 
 Because this repository has no configured build or test runner, validation currently consists of serving the site locally and exercising the affected browser workflow.
 
-## License
-
-No license file is currently included in this repository. Contact the repository owner before redistributing the project or incorporating it into another product.
